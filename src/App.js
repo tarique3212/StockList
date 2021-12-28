@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box } from "@chakra-ui/layout";
+import { useState ,useEffect} from "react";
+import Search from "./components/Search";
+import WatchList from "./components/WatchList";
+import data from './components/data.json'
+
 
 function App() {
+
+  const [watchList, setWatchList] = useState([])
+
+  useEffect(() => {
+    let list=data.map(item=>{
+      return [...item,0]
+    })
+    setWatchList(list)
+   
+  }, [])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+      <Search watchList={watchList} setWatchList={setWatchList}/>
+     <WatchList watchList={watchList.filter(item=>(item[3]===1))} /> 
+    </Box>
   );
 }
 
